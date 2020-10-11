@@ -55,7 +55,7 @@ def processCSVRecords(csvRecords):
     # Iterate thru the records
     for rec in csvRecords:
         key = rec["Date"]
-        pnl = rec["PnL"]
+        pnl = int(rec["PnL"])
 
         if key not in trackingDict:
             trackingDict[key] = pnl
@@ -72,7 +72,7 @@ def writeResult(trackingDict, outputFile):
     # Initialize Variable
     fileText = ""
     fileText += "Financial Analysis\n"
-    fileText += "------------------------------------"
+    fileText += "------------------------------------\n"
 
 
     # Do the Analysis
@@ -94,7 +94,7 @@ def writeResult(trackingDict, outputFile):
     
     # Create the Analysis Text
     fileText += "Total Months: " + str(totalMonths) + "\n"
-    fileText += "Average Change: $" + (totalPnL/totalMonths) + "\n"
+    fileText += "Average Change: $" + str(totalPnL/totalMonths) + "\n"
     fileText += "Greatest Increase in Profits: " + greatestIncKey + " ($" + str(greatestIncPnL) + ")\n"
     fileText += "Greatest Decrease in Profits: " + greatestDecKey + " ($" + str(greatestDecPnL) + ")\n"
 
