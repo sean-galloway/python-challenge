@@ -69,7 +69,7 @@ def processCSVRecords(csvRecords):
 # Summarize results and write them out
 ###############################################################################
 def writeResult(trackingDict, outputFile):
-    # Initialize Variable
+    # Initialize Variables
     fileText = ""
     fileText += "Financial Analysis\n"
     fileText += "------------------------------------\n"
