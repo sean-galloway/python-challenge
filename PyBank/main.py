@@ -91,12 +91,13 @@ def writeResult(trackingDict, outputFile):
         if pnl < greatestDecPnL:
             greatestDecKey = key
             greatestDecPnL = pnl
-    
+    averagePnL = totalPnL/totalMonths
+
     # Create the Analysis Text
-    fileText += "Total Months: " + str(totalMonths) + "\n"
-    fileText += "Average Change: $" + str(totalPnL/totalMonths) + "\n"
-    fileText += "Greatest Increase in Profits: " + greatestIncKey + " ($" + str(greatestIncPnL) + ")\n"
-    fileText += "Greatest Decrease in Profits: " + greatestDecKey + " ($" + str(greatestDecPnL) + ")\n"
+    fileText += f"Total Months: {totalMonths}\n"
+    fileText += f"Average Change: ${averagePnL:.2f}\n"
+    fileText += f"Greatest Increase in Profits: {greatestIncKey} (${greatestIncPnL:.2f})\n"
+    fileText += f"Greatest Decrease in Profits: {greatestDecKey} (${greatestDecPnL:.2f})\n"
 
     # Write the Analysis out
     print(fileText)
