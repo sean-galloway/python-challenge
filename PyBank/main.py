@@ -71,8 +71,35 @@ def processCSVRecords(csvRecords):
 def writeResult(trackingDict, outputFile):
     # Initialize Variable
     fileText = ""
+    fileText += "Financial Analysis\n"
+    fileText += "------------------------------------"
+
+
+    # Do the Analysis
+    totalMonths = len(trackingDict)
+    totalPnL = 0
+    greatestIncKey = ""
+    greatestIncPnL = 0
+    greatestDecKey = ""
+    greatestDecPnL = 0
+    for key in trackingDict:
+        pnl = trackingDict[key]
+        totalPnL += pnl
+        if pnl > greatestIncPnL:
+            greatestIncKey = key
+            greatestIncPnL = pnl
+        if pnl < greatestDecPnL:
+            greatestDecKey = key
+            greatestDecPnL = pnl
     
+    # Create the Analysis Text
+    fileText += "Total Months: " + str(totalMonths) + "\n"
+    fileText += "Average Change: $" + (totalPnL/totalMonths) + "\n"
+    fileText += "Greatest Increase in Profits: " + greatestIncKey + " ($" + str(greatestIncPnL) + ")\n"
+    fileText += "Greatest Decrease in Profits: " + greatestDecKey + " ($" + str(greatestDecPnL) + ")\n"
+
     # Write the Analysis out
+    print(fileText)
     fh = open(outputFile, "w")
     fh.write(fileText)
     fh.close()
