@@ -69,11 +69,6 @@ def processCSVRecords(csvRecords):
 # Summarize results and write them out
 ###############################################################################
 def writeResult(trackingDict, outputFile):
-    # Initialize Variables
-    fileText = ""
-    fileText += "Financial Analysis\n"
-    fileText += "------------------------------------\n"
-
 
     # Do the Analysis
     totalMonths = len(trackingDict)
@@ -94,7 +89,11 @@ def writeResult(trackingDict, outputFile):
     averagePnL = totalPnL/totalMonths
 
     # Create the Analysis Text
+    fileText = ""
+    fileText += "Financial Analysis\n"
+    fileText += "------------------------------------\n"
     fileText += f"Total Months: {totalMonths}\n"
+    fileText += f"Total: {totalPnL:.2f}\n"
     fileText += f"Average Change: ${averagePnL:.2f}\n"
     fileText += f"Greatest Increase in Profits: {greatestIncKey} (${greatestIncPnL:.2f})\n"
     fileText += f"Greatest Decrease in Profits: {greatestDecKey} (${greatestDecPnL:.2f})\n"
