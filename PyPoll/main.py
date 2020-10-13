@@ -71,7 +71,7 @@ def writeResult(totalVotes, elctionDict, outputFile):
         percentVotes = 100 * votes/totalVotes
         fileText += f"{candidate}: {percentVotes:.3f}% ({votes})\n"
     fileText += "-------------------------\n"
-    fileText += f"Winner: {winner}\n"
+    fileText += f"Winner: {winner}"
     fileText += "-------------------------\n"
 
     # Write the Analysis out

@@ -55,7 +55,7 @@ def processCSVRecords(csvRecords):
     # Iterate thru the records
     for rec in csvRecords:
         key = rec["Date"]
-        pnl = int(rec["PnL"])
+        pnl = float(rec["PnL"])
 
         if key not in trackingDict:
             trackingDict[key] = pnl
@@ -73,6 +73,9 @@ def writeResult(trackingDict, outputFile):
     # Do the Analysis
     totalMonths = len(trackingDict)
     totalPnL = 0
+    lastPnL = 0
+    blnFirst = True
+    netChangePnL = 0
     greatestIncKey = ""
     greatestIncPnL = 0
     greatestDecKey = ""
@@ -80,21 +83,29 @@ def writeResult(trackingDict, outputFile):
     for key in trackingDict:
         pnl = trackingDict[key]
         totalPnL += pnl
+        if blnFirst is False:
+            currentChange = pnl - lastPnL
+            # print(f"Current Change {currentChange}")
+            netChangePnL += currentChange
+        lastPnL = pnl
+        blnFirst = False
         if pnl > greatestIncPnL:
             greatestIncKey = key
             greatestIncPnL = pnl
         if pnl < greatestDecPnL:
             greatestDecKey = key
             greatestDecPnL = pnl
-    averagePnL = totalPnL/totalMonths
-
+    # print(f"netChangePnL {netChangePnL} totalMonths {totalMonths}")
+    averageChangePnL = netChangePnL/totalMonths
+    # print(f"averageChangePnL {averageChangePnL}")
+    
     # Create the Analysis Text
     fileText = ""
     fileText += "Financial Analysis\n"
     fileText += "------------------------------------\n"
     fileText += f"Total Months: {totalMonths}\n"
     fileText += f"Total: {totalPnL:.2f}\n"
-    fileText += f"Average Change: ${averagePnL:.2f}\n"
+    fileText += f"Average Change: ${averageChangePnL:.2f}\n"
     fileText += f"Greatest Increase in Profits: {greatestIncKey} (${greatestIncPnL:.2f})\n"
     fileText += f"Greatest Decrease in Profits: {greatestDecKey} (${greatestDecPnL:.2f})\n"
 
