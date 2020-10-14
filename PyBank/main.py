@@ -25,6 +25,9 @@ class greatestX:
 
 
 ###############################################################################
+#
+###############################################################################
+###############################################################################
 # Setup Globals
 ###############################################################################
 gInputFile = "./Resources/budget_data.csv"
@@ -127,7 +130,7 @@ def writeResult(trackingDict, outputFile):
 
     # Write the Analysis out
     print(fileText)
-    fh = open(outputFile, "w")
+    fh = open(gGetCWD + outputFile, "w")
     fh.write(fileText)
     fh.close()
 
