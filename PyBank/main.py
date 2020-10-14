@@ -9,10 +9,15 @@ import pprint
 import csv
 
 ###############################################################################
+#
+###############################################################################
+###############################################################################
 # Setup Globals
 ###############################################################################
 gInputFile = "./Resources/budget_data.csv"
 gOutputFile = "./Analysis/budget_analysis.txt"
+gGetCWD = os.path.dirname(os.path.abspath(__file__))
+
 
 ###############################################################################
 # parse CSV File
@@ -111,7 +116,7 @@ def writeResult(trackingDict, outputFile):
 
     # Write the Analysis out
     print(fileText)
-    fh = open(outputFile, "w")
+    fh = open(gGetCWD + outputFile, "w")
     fh.write(fileText)
     fh.close()
 
@@ -120,7 +125,7 @@ def writeResult(trackingDict, outputFile):
 ###############################################################################
 def main():
     # Run the Functions here
-    csvRecords = parseCSV(gInputFile)
+    csvRecords = parseCSV(gGetCWD + gInputFile)
     trackingDict = processCSVRecords(csvRecords)
     writeResult(trackingDict, gOutputFile)
 
