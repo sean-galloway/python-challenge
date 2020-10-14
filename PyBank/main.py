@@ -7,12 +7,30 @@ import collections
 import pprint
 # import json
 import csv
+from dataclasses import dataclass
+
+
+###############################################################################
+# Data Classes
+###############################################################################
+@dataclass
+class CSVRecord:
+    Date: str
+    PnL: float
+
+@dataclass
+class greatestX:
+    key: str
+    val: float
+
 
 ###############################################################################
 # Setup Globals
 ###############################################################################
 gInputFile = "./Resources/budget_data.csv"
 gOutputFile = "./Analysis/budget_analysis.txt"
+gGetCWD = os.path.dirname(os.path.abspath(__file__))
+
 
 ###############################################################################
 # parse CSV File
@@ -36,7 +54,7 @@ def parseCSV(csvFile):
             # print("Line: " + str(line))
             colDate = row[0]
             colPnL = row[1]
-            rec = {"Date": colDate, "PnL": colPnL}
+            rec = CSVRecord(colDate, colPnL)
             csvRecords.append(rec)
 
     except csv.Error as e:
@@ -54,8 +72,8 @@ def processCSVRecords(csvRecords):
 
     # Iterate thru the records
     for rec in csvRecords:
-        key = rec["Date"]
-        pnl = float(rec["PnL"])
+        key = rec.Date
+        pnl = float(rec.PnL)
 
         if key not in trackingDict:
             trackingDict[key] = pnl
@@ -76,10 +94,8 @@ def writeResult(trackingDict, outputFile):
     lastPnL = 0
     blnFirst = True
     netChangePnL = 0
-    greatestIncKey = ""
-    greatestIncPnL = 0
-    greatestDecKey = ""
-    greatestDecPnL = 0
+    greatestInc = greatestX("", 0)
+    greatestDec = greatestX("", 0)
     for key in trackingDict:
         pnl = trackingDict[key]
         totalPnL += pnl
@@ -89,12 +105,12 @@ def writeResult(trackingDict, outputFile):
             netChangePnL += currentChange
         lastPnL = pnl
         blnFirst = False
-        if pnl > greatestIncPnL:
-            greatestIncKey = key
-            greatestIncPnL = pnl
-        if pnl < greatestDecPnL:
-            greatestDecKey = key
-            greatestDecPnL = pnl
+        if pnl > greatestInc.val:
+            greatestInc.key = key
+            greatestInc.val = pnl
+        if pnl < greatestDec.val:
+            greatestDec.key = key
+            greatestDec.val = pnl
     # print(f"netChangePnL {netChangePnL} totalMonths {totalMonths}")
     averageChangePnL = netChangePnL/totalMonths
     # print(f"averageChangePnL {averageChangePnL}")
@@ -106,8 +122,8 @@ def writeResult(trackingDict, outputFile):
     fileText += f"Total Months: {totalMonths}\n"
     fileText += f"Total: {totalPnL:.2f}\n"
     fileText += f"Average Change: ${averageChangePnL:.2f}\n"
-    fileText += f"Greatest Increase in Profits: {greatestIncKey} (${greatestIncPnL:.2f})\n"
-    fileText += f"Greatest Decrease in Profits: {greatestDecKey} (${greatestDecPnL:.2f})\n"
+    fileText += f"Greatest Increase in Profits: {greatestInc.key} (${greatestInc.val:.2f})\n"
+    fileText += f"Greatest Decrease in Profits: {greatestDec.key} (${greatestDec.val:.2f})\n"
 
     # Write the Analysis out
     print(fileText)
@@ -120,9 +136,9 @@ def writeResult(trackingDict, outputFile):
 ###############################################################################
 def main():
     # Run the Functions here
-    csvRecords = parseCSV(gInputFile)
+    csvRecords = parseCSV(gGetCWD + gInputFile)
     trackingDict = processCSVRecords(csvRecords)
-    writeResult(trackingDict, gOutputFile)
+    writeResult(trackingDict, gGetCWD + gOutputFile)
 
 ###############################################################################
 # Run Main

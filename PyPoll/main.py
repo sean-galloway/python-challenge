@@ -8,11 +8,14 @@ import pprint
 # import json
 import csv
 
+
 ###############################################################################
 # Setup Globals
 ###############################################################################
 gInputFile = "./Resources/election_data.csv"
 gOutputFile = "./Analysis/election_analysis.txt"
+gGetCWD = os.path.dirname(os.path.abspath(__file__))
+
 
 ###############################################################################
 # parse CSV File
@@ -71,7 +74,7 @@ def writeResult(totalVotes, elctionDict, outputFile):
         percentVotes = 100 * votes/totalVotes
         fileText += f"{candidate}: {percentVotes:.3f}% ({votes})\n"
     fileText += "-------------------------\n"
-    fileText += f"Winner: {winner}"
+    fileText += f"Winner: {winner}\n"
     fileText += "-------------------------\n"
 
     # Write the Analysis out
@@ -85,8 +88,8 @@ def writeResult(totalVotes, elctionDict, outputFile):
 ###############################################################################
 def main():
     # Run the Functions here
-    totalVotes, elctionDict = parseCSV(gInputFile)
-    writeResult(totalVotes, elctionDict, gOutputFile)
+    totalVotes, elctionDict = parseCSV(gGetCWD + gInputFile)
+    writeResult(totalVotes, elctionDict, gGetCWD + gOutputFile)
 
 ###############################################################################
 # Run Main
