@@ -88,8 +88,8 @@ def writeResult(totalVotes, elctionDict, outputFile):
 ###############################################################################
 def main():
     # Run the Functions here
-    totalVotes, elctionDict = parseCSV(gGetCWD + gInputFile)
-    writeResult(totalVotes, elctionDict, gGetCWD + gOutputFile)
+    totalVotes, elctionDict = parseCSV(gInputFile)
+    writeResult(totalVotes, elctionDict, gOutputFile)
 
 ###############################################################################
 # Run Main

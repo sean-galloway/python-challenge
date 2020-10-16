@@ -136,9 +136,9 @@ def writeResult(trackingDict, outputFile):
 ###############################################################################
 def main():
     # Run the Functions here
-    csvRecords = parseCSV(gGetCWD + gInputFile)
+    csvRecords = parseCSV(gInputFile)
     trackingDict = processCSVRecords(csvRecords)
-    writeResult(trackingDict, gGetCWD + gOutputFile)
+    writeResult(trackingDict, gOutputFile)
 
 ###############################################################################
 # Run Main
