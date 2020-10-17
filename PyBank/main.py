@@ -53,7 +53,7 @@ def parseCSV(csvFile):
                 continue
             # print("Line: " + str(line))
             colDate = row[0]
-            colPnL = row[1]
+            colPnL = float(row[1])
             rec = CSVRecord(colDate, colPnL)
             csvRecords.append(rec)
 
@@ -73,7 +73,7 @@ def processCSVRecords(csvRecords):
     # Iterate thru the records
     for rec in csvRecords:
         key = rec.Date
-        pnl = float(rec.PnL)
+        pnl = rec.PnL
 
         if key not in trackingDict:
             trackingDict[key] = pnl
@@ -94,6 +94,7 @@ def writeResult(trackingDict, outputFile):
     lastPnL = 0
     blnFirst = True
     netChangePnL = 0
+    currentChange = 0
     greatestInc = greatestX("", 0)
     greatestDec = greatestX("", 0)
     for key in trackingDict:
@@ -105,12 +106,12 @@ def writeResult(trackingDict, outputFile):
             netChangePnL += currentChange
         lastPnL = pnl
         blnFirst = False
-        if pnl > greatestInc.val:
+        if currentChange > greatestInc.val:
             greatestInc.key = key
-            greatestInc.val = pnl
-        if pnl < greatestDec.val:
+            greatestInc.val = currentChange
+        if currentChange < greatestDec.val:
             greatestDec.key = key
-            greatestDec.val = pnl
+            greatestDec.val = currentChange
     # print(f"netChangePnL {netChangePnL} totalMonths {totalMonths}")
     averageChangePnL = netChangePnL/(totalMonths-1)
     # print(f"averageChangePnL {averageChangePnL}")
