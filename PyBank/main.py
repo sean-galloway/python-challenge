@@ -112,7 +112,7 @@ def writeResult(trackingDict, outputFile):
             greatestDec.key = key
             greatestDec.val = pnl
     # print(f"netChangePnL {netChangePnL} totalMonths {totalMonths}")
-    averageChangePnL = netChangePnL/totalMonths
+    averageChangePnL = netChangePnL/(totalMonths-1)
     # print(f"averageChangePnL {averageChangePnL}")
     
     # Create the Analysis Text
