@@ -27,8 +27,8 @@ class greatestX:
 ###############################################################################
 # Setup Globals
 ###############################################################################
-gInputFile = "./Resources/budget_data.csv"
-gOutputFile = "./Analysis/budget_analysis.txt"
+gInputFile = os.path.join("Resources", "budget_data.csv")
+gOutputFile = os.path.join("Analysis", "budget_analysis.txt")
 gGetCWD = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -127,7 +127,7 @@ def writeResult(trackingDict, outputFile):
 
     # Write the Analysis out
     print(fileText)
-    fh = open(gGetCWD + outputFile, "w")
+    fh = open(outputFile, "w")
     fh.write(fileText)
     fh.close()
 

@@ -12,8 +12,8 @@ import csv
 ###############################################################################
 # Setup Globals
 ###############################################################################
-gInputFile = "./Resources/election_data.csv"
-gOutputFile = "./Analysis/election_analysis.txt"
+gInputFile = os.path.join("Resources", "election_data.csv")
+gOutputFile = os.path.join("Analysis", "election_analysis.txt")
 gGetCWD = os.path.dirname(os.path.abspath(__file__))
 
 
