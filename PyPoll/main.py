@@ -60,7 +60,7 @@ def parseCSV(csvFile):
 def writeResult(totalVotes, elctionDict, outputFile):
     # Initialize Variables
     fileText = ""
-    fileText += "Financial Analysis\n"
+    fileText += "Election Results\n"
     fileText += "-------------------------\n"
     fileText += f"Total Votes: {totalVotes}\n"
     fileText += "-------------------------\n"
