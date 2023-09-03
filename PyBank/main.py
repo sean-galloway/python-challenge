@@ -25,7 +25,7 @@ def parseCSV(csvFile):
     try:
         reader = csv.reader(open(csvFile))
     except IOError:
-        print("Error, could not open CSV File: " + csvFile)
+        print(f"Error, could not open CSV File: {csvFile}")
         sys.exit(1)
     csvRecords = []
 
@@ -43,8 +43,9 @@ def parseCSV(csvFile):
             csvRecords.append(rec)
 
     except csv.Error as e:
-        sys.exit('Error reading CSV File: ' + csvFile + " line number " +
-                 str(line) + " error: " + str(e))
+        sys.exit(
+            f'Error reading CSV File: {csvFile} line number {str(line)} error: {str(e)}'
+        )
    # Return the results
     return csvRecords
 
@@ -101,11 +102,7 @@ def writeResult(trackingDict, outputFile):
             greatestDec_val = currentChange
     # print(f"netChangePnL {netChangePnL} totalMonths {totalMonths}")
     averageChangePnL = netChangePnL/(totalMonths-1)
-    # print(f"averageChangePnL {averageChangePnL}")
-    
-    # Create the Analysis Text
-    fileText = ""
-    fileText += "Financial Analysis\n"
+    fileText = "" + "Financial Analysis\n"
     fileText += "------------------------------------\n"
     fileText += f"Total Months: {totalMonths}\n"
     fileText += f"Total: {totalPnL:.2f}\n"
@@ -115,9 +112,8 @@ def writeResult(trackingDict, outputFile):
 
     # Write the Analysis out
     print(fileText)
-    fh = open(outputFile, "w")
-    fh.write(fileText)
-    fh.close()
+    with open(outputFile, "w") as fh:
+        fh.write(fileText)
 
 ###############################################################################
 # Main

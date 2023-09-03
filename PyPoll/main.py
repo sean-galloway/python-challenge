@@ -27,7 +27,7 @@ def parseCSV(csvFile):
     try:
         reader = csv.reader(open(csvFile))
     except IOError:
-        print("Error, could not open CSV File: " + csvFile)
+        print(f"Error, could not open CSV File: {csvFile}")
         sys.exit(1)
 
     # Read the file into an Election Dictionary and total the votes
@@ -49,8 +49,9 @@ def parseCSV(csvFile):
                 elctionDict[colCandidate] += 1
 
     except csv.Error as e:
-        sys.exit('Error reading CSV File: ' + csvFile + " line number " +
-                 str(line) + " error: " + str(e))
+        sys.exit(
+            f'Error reading CSV File: {csvFile} line number {str(line)} error: {str(e)}'
+        )
    # Return the results
     return totalVotes, elctionDict
 
@@ -58,9 +59,7 @@ def parseCSV(csvFile):
 # Tally the results and write them out
 ###############################################################################
 def writeResult(totalVotes, elctionDict, outputFile):
-    # Initialize Variables
-    fileText = ""
-    fileText += "Election Results\n"
+    fileText = "" + "Election Results\n"
     fileText += "-------------------------\n"
     fileText += f"Total Votes: {totalVotes}\n"
     fileText += "-------------------------\n"
@@ -79,9 +78,8 @@ def writeResult(totalVotes, elctionDict, outputFile):
 
     # Write the Analysis out
     print(fileText)
-    fh = open(outputFile, "w")
-    fh.write(fileText)
-    fh.close()
+    with open(outputFile, "w") as fh:
+        fh.write(fileText)
 
 ###############################################################################
 # Main
